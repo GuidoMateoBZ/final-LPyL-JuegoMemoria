@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #0f172a;
+    /* Fondo slate oscuro elegante */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.main-title {
+    color: #f8fafc;
+    margin-bottom: 40px;
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.formularios-wrapper {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* En celulares colapsará uno debajo del otro */
+    width: 100%;
+    max-width: 900px;
+}
+
+.registro-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.registro-container h1 {
+    color: #333;
+    margin-bottom: 24px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: #fff;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #1e293b;
+    box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.2);
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: #1e293b;
+    /* Botón oscuro */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s ease;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background: #0f172a;
+    /* Oscuro fuerte en hover */
+}
+
+.btn-submit:active {
+    transform: translateY(2px);
+}
+
+.enlace-volver {
+    display: inline-block;
+    margin-top: 20px;
+    color: #475569;
+    /* Gris pizarra oscuro */
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.enlace-volver:hover {
+    color: #0f172a;
+    /* Oscurecer en hover */
+    text-decoration: underline;
+}
+
+/* Enlaces que están sueltos en el body (fondo oscuro) */
+.enlace-volver-inverso {
+    display: inline-block;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.enlace-volver-inverso:hover {
+    color: #f8fafc;
+    text-decoration: underline;
+}

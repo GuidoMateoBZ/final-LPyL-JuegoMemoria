@@ -84,5 +84,37 @@ class Usuario
             }
         }
     }
+
+    public function iniciarSesion()
+    {
+        $con = new mysqli("localhost", "root", "", "juego_memoria");
+        if ($con->connect_error) {
+            return "Error de conexión a la base de datos.";
+        }
+
+        $query = "SELECT * FROM usuario WHERE nombre_usuario = '$this->nombre_usuario'";
+        try {
+            $resultado = $con->query($query);
+            $usuario = $resultado->fetch_assoc();
+            $respuesta = ["exito" => false, "mensaje" => ""];
+            if ($usuario) {
+                if (password_verify($this->contrasenia, $usuario['contrasenia'])) {
+                    $this->id_usuario = $usuario['id_usuario'];
+                    $respuesta["exito"] = true;
+                    $respuesta["mensaje"] = "Login exitoso";
+                } else {
+                    $respuesta["mensaje"] = "Contraseña incorrecta";
+                }
+            } else {
+                $respuesta["mensaje"] = "Usuario no encontrado";
+            }
+            $resultado->free();
+            $con->close();
+            return $respuesta;
+        } catch (mysqli_sql_exception $e) {
+            $con->close();
+            return ["exito" => false, "mensaje" => "Error en la base de datos: " . $e->getMessage()];
+        }
+    }
 }
 ?>

@@ -1,46 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego Memoria</title>
+    <title>Registro - Juego Memoria</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>Registro</h1>
-    <form id="formRegistro">
-        <label for="nombre">Nombre de usuario</label>
-        <input type="text" id="nombre" name="nombre" required>
+    <div class="registro-container">
+        <h1>Registro</h1>
+        <form id="formRegistro">
+            <div class="form-group">
+                <label for="nombre">Nombre de usuario</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
 
-        <label for="contrasenia">Contraseña</label>
-        <input type="password" id="contrasenia" name="contrasenia" required>
+            <div class="form-group">
+                <label for="contrasenia">Contraseña</label>
+                <input type="password" id="contrasenia" name="contrasenia" required>
+            </div>
 
-        <label for="fecha_nacimiento">Fecha de nacimiento</label>
-        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+            <div class="form-group">
+                <label for="fecha_nacimiento">Fecha de nacimiento</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+            </div>
 
-        <select name="id_pais" id="id_pais" required>
-            <option value="none">Seleccione un país</option>
-            <?php
-            $con = new mysqli("localhost", "root", "", "juego_memoria") or die("Error al conectar a la base de datos");
-            $query = "SELECT * FROM pais";
-            try {
-                $resultado = $con->query($query);
-                while ($fila = $resultado->fetch_assoc()) {
-                    echo "<option value='" . $fila['id_pais'] . "'>" . $fila['nombre'] . "</option>";
-                }
-                $resultado->free();
-            } catch (mysqli_sql_exception $e) {
-                echo "Error al obtener los países: " . $e->getMessage();
-            } finally {
-                $con->close();
-            }
-            ?>
-        </select>
-        <input type="submit" value="Registrarse">
-        <br>
-        <a href="index.php">Volver al inicio</a>
-    </form>
+            <div class="form-group">
+                <label for="id_pais">País</label>
+                <select name="id_pais" id="id_pais" required>
+                    <option value="none" selected disabled>Seleccione un país</option>
+                    <?php
+                    $con = new mysqli("localhost", "root", "", "juego_memoria") or die("Error al conectar a la base de datos");
+                    $query = "SELECT * FROM pais";
+                    try {
+                        $resultado = $con->query($query);
+                        while ($fila = $resultado->fetch_assoc()) {
+                            echo "<option value='" . $fila['id_pais'] . "'>" . $fila['nombre'] . "</option>";
+                        }
+                        $resultado->free();
+                    } catch (mysqli_sql_exception $e) {
+                        echo "Error al obtener los países: " . $e->getMessage();
+                    } finally {
+                        $con->close();
+                    }
+                    ?>
+                </select>
+            </div>
+
+            <input type="submit" value="Registrarse" class="btn-submit">
+            <a href="index.php" class="enlace-volver">Volver al inicio</a>
+        </form>
+    </div>
 
     <script>
         document.getElementById('formRegistro').addEventListener('submit', function (evento) {
