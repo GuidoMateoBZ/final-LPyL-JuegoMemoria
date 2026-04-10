@@ -9,37 +9,70 @@
 
 <body>
     <h1>Registro</h1>
-    <p>Acá iría el registro</p>
-    <form action="" method="post">
+    <form id="formRegistro">
         <label for="nombre">Nombre de usuario</label>
         <input type="text" id="nombre" name="nombre" required>
+
         <label for="contrasenia">Contraseña</label>
         <input type="password" id="contrasenia" name="contrasenia" required>
-        <label for="edad">Edad</label>
-        <input type="number" id="edad" name="edad" required>
-        <select name="pais" id="pais" required>
+
+        <label for="fecha_nacimiento">Fecha de nacimiento</label>
+        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+
+        <select name="id_pais" id="id_pais" required>
             <option value="none">Seleccione un país</option>
-            <option value="001">Argentina</option>
-            <option value="002">Brasil</option>
-            <option value="003">Chile</option>
-            <option value="004">Colombia</option>
-            <option value="005">Peru</option>
+            <?php
+            $con = new mysqli("localhost", "root", "", "juego_memoria") or die("Error al conectar a la base de datos");
+            $query = "SELECT * FROM pais";
+            try {
+                $resultado = $con->query($query);
+                while ($fila = $resultado->fetch_assoc()) {
+                    echo "<option value='" . $fila['id_pais'] . "'>" . $fila['nombre'] . "</option>";
+                }
+                $resultado->free();
+            } catch (mysqli_sql_exception $e) {
+                echo "Error al obtener los países: " . $e->getMessage();
+            } finally {
+                $con->close();
+            }
+            ?>
         </select>
-        <input type="submit" value="Registrarse" name="btnRegistrarse">
+        <input type="submit" value="Registrarse">
+        <br>
+        <a href="index.php">Volver al inicio</a>
     </form>
-    <?php
-    if (isset($_POST['btnRegistrarse'])) {
-        $nombre = $_POST['nombre'];
-        $contrasenia = $_POST['contrasenia'];
-        $edad = $_POST['edad'];
-        $id_pais = $_POST['pais'];
-        $con = new mysqli("localhost", "root", "", "juego_memoria") or die("Error al conectar a la base de datos");
-        $query = "INSERT INTO usuario (nombre, contrasenia, edad, id_pais) VALUES ('$nombre', '$contrasenia', '$edad', '$id_pais')";
-        $con->query($query) or die("Error al insertar el jugador");
-        $con->close();
-        echo "Jugador insertado correctamente";
-    }
-    ?>
+
+    <script>
+        document.getElementById('formRegistro').addEventListener('submit', function (evento) {
+            // Frenamos la recarga tradicional de la página
+            evento.preventDefault();
+
+            var nombre = document.getElementById('nombre').value;
+            var contrasenia = document.getElementById('contrasenia').value;
+            var fecha = document.getElementById('fecha_nacimiento').value;
+            var pais = document.getElementById('id_pais').value;
+
+            var parametros = "nombre=" + nombre + "&contrasenia=" + contrasenia + "&fecha_nacimiento=" + fecha + "&id_pais=" + pais;
+            var peticion = new XMLHttpRequest();
+
+            peticion.onreadystatechange = function () {
+                if (peticion.readyState == 4 && peticion.status == 200) {
+
+                    // Mostramos la respuesta del servidor
+                    alert(peticion.responseText);
+
+                    // Si el registro fue exitoso, limpiamos los campos
+                    if (peticion.responseText.includes("correctamente")) {
+                        document.getElementById('formRegistro').reset();
+                    }
+                }
+            };
+
+            peticion.open("POST", "procesar_registro.php", true);
+            peticion.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            peticion.send(parametros);
+        });
+    </script>
 </body>
 
 </html>
