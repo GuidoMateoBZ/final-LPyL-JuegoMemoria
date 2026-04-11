@@ -35,6 +35,7 @@ if ($resJuntos['exito'] && !empty($resJuntos['datos'])) {
     $mensaje_u2 = "En ese combate obtuviste $pts2 puntos.";
 } else {
     // Nunca jugaron juntos, revisamos individualmente
+    $mensaje_general = "¡Es la primera vez que juegan juntos!";
     $resU1 = $gestorPartida->obtenerUltimaPartidaUsuarioConOponente($u1_id);
     if ($resU1['exito'] && !empty($resU1['datos'])) {
         $datosU1 = $resU1['datos'];
