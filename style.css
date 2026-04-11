@@ -18,7 +18,7 @@ body {
 
 .main-title {
     color: #f8fafc;
-    margin-bottom: 40px;
+    margin-bottom: 20px; /* Reducido de 40px a 20px para no comerse margen arriba en los tableros grandes */
     font-size: 36px;
     font-weight: 700;
     text-align: center;
@@ -156,4 +156,168 @@ body {
     line-height: 1.4;
     border-top: 1px solid #cbd5e1;
     padding-top: 10px;
+}
+
+/* ========================================================
+   ESTILOS DE LA PANTALLA ACTIVA DEL JUEGO
+   ======================================================== */
+
+.pantalla-oculta {
+    display: none !important;
+}
+
+/* Envolvemos en wrapper para que tome las propiedades equitativas del flex de configuracion */
+.pantalla-juego-estado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.panel-jugador {
+    flex: 1 1 250px; 
+    border: 4px solid transparent; /* Reservado para el iluminador de turno que hiciste en JS */
+    transition: border-color 0.3s;
+}
+
+.panel-tablero {
+    flex: 2 1 400px;
+    max-width: 800px; /* Expansión para acomodar dificultades elevadas */
+}
+
+.subtitulo-juego {
+    margin-bottom: 5px; /* Optimizado desde 10px */
+    font-size: 20px;
+}
+
+.nombre-participante {
+    color: #0f172a; 
+    margin-bottom: 25px;
+}
+
+.modulo-estadisticas {
+    background: rgba(0,0,0,0.03); 
+    padding: 15px; 
+    border-radius: 8px;
+}
+
+.modulo-estadisticas p {
+    font-size: 14px; 
+    color: #555; 
+    margin-bottom: 10px;
+}
+
+/* Colores visuales en métricas */
+.dato-pares {
+    font-weight: bold; 
+    font-size: 26px; 
+    color: #2563eb; /* Azul */
+}
+
+.dato-intentos {
+    font-weight: bold; 
+    font-size: 26px; 
+    color: #ef4444; /* Rojo */
+}
+
+.tiempo-texto {
+    font-size: 18px; 
+    margin-bottom: 5px; /* Optimizado de 25px para pegar el tablero a su titulo  */
+    color: #475569;
+}
+
+.tiempo-valor {
+    font-weight: bold; 
+    color: #0f172a;
+}
+
+.btn-comenzar-juego {
+    background: #22c55e;
+    margin-top: 10px;
+}
+
+.btn-comenzar-juego:hover {
+    background: #16a34a;
+}
+
+/* ========================================================
+   SISTEMA DE CARTAS Y TABLERO
+   ======================================================== */
+
+.tablero {
+    display: grid;
+    /* Reducido a 70px para compactar más columnas y centrado manual */
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.carta {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Fuerza a que sean siempre cuadradas sin importar el alto de pantalla */
+    background-color: #cbd5e1; /* Color base gris claro de frente (para los num) */
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    
+    /* Propiedades ajustadas para que los logos y aviones no se corten */
+    background-size: contain;
+    background-color: #f8fafc; 
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Propiedades por si contiene texto puro inyectado via JS (Para el caso de números) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 38px;
+    font-weight: 800;
+    color: transparent; /* El número oculto por default */
+    
+    /* Transición si hacemos hover o la damos vuelta */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* LA TAPA: Generamos un elemento falso encima de la carta usando CSS */
+.carta::before {
+    content: ""; /* Eliminada la M por estética */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1e293b, #0f172a); /* Fondo tapado elegante azul/gris oscuro */
+    color: #94a3b8; /* Letra color gris claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 44px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: opacity 0.3s ease;
+    z-index: 2; /* Lo mandamos a la capa de arriba para que tape lo que hay atras (La foto o el número) */
+}
+
+/* LOGICA VISUAL DEL JUEGO */
+
+/* Cuando JS le asigne la clase volteada o acertada la tapa tiene que desvanecerse para mostrar quien estaba detrás */
+.carta.volteada::before, .carta.acertada::before {
+    opacity: 0;
+    pointer-events: none; /* Para que al darle click no haga nada con su cuerpo */
+}
+
+/* Y si era número, se destiñe hacia su color real para revelarlo */
+.carta.volteada, .carta.acertada {
+    color: #1e293b; 
+    transform: scale(1.05); /* Efecto 3D de saltar hacia vos */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+.carta.acertada {
+    border: 4px solid #22c55e; /* Borde de éxito */
+    transform: scale(1);
+    cursor: default; /* Ya es inclickeable obvio */
 }

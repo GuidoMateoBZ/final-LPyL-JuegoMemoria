@@ -98,16 +98,16 @@ if ($resJuntos['exito'] && !empty($resJuntos['datos'])) {
                 <div class="form-group">
                     <label for="dificultad">Selecciona una Dificultad</label>
                     <select name="dificultad" id="dificultad" required>
-                        <option value="8">Baja (4 pares)</option>
-                        <option value="16">Media (8 pares)</option>
-                        <option value="32">Alta (16 pares)</option>
+                        <option value="8,20">Baja (4 pares - 20 intentos)</option>
+                        <option value="16,40">Media (8 pares - 40 intentos)</option>
+                        <option value="32,64">Alta (16 pares - 64 intentos)</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="tematica">Selecciona una Temática</label>
                     <select name="tematica" id="tematica" required>
                         <option value="numeros">Números</option>
-                        <option value="figuras">Figuras</option>
+                        <option value="futbol">Fútbol</option>
                         <option value="aviones">Aviones</option>
                     </select>
                 </div>
@@ -145,7 +145,7 @@ if ($resJuntos['exito'] && !empty($resJuntos['datos'])) {
             const tematica = document.getElementById('tematica').value;
             const tiempo = document.getElementById('tiempo').value;
             sessionStorage.setItem('partida', JSON.stringify({
-                dificultad: dificultad,
+                dificultad: dificultad.split(','),
                 tematica: tematica,
                 tiempo: tiempo
             }));

@@ -1,0 +1,21 @@
+EQUIPOS DE FUTBOL ARGENTINO
+=============================================
+
+01_River_Plate.jpg | Club Atlético River Plate
+02_Boca_Juniors.jpg | Club Atlético Boca Juniors
+03_Racing_Club.jpg | Racing Club
+04_Independiente.jpg | Club Atlético Independiente
+05_San_Lorenzo.jpg | San Lorenzo de Almagro
+06_Huracan.jpg | Club Atlético Huracán
+07_Estudiantes.jpg | Estudiantes de La Plata
+08_Velez_Sarsfield.jpg | Club Atlético Vélez Sársfield
+09_Lanus.jpg | Club Atlético Lanús
+10_Belgrano.jpg | Club Atlético Belgrano
+11_Talleres.jpg | Club Atlético Talleres
+12_Newells_Old_Boys.jpg | Newell's Old Boys
+13_Rosario_Central.jpg | Rosario Central
+14_Godoy_Cruz.jpg | Godoy Cruz Antonio Tomba
+15_Atletico_Tucuman.jpg | Club Atlético Tucumán
+16_Gimnasia_La_Plata.jpg | Gimnasia y Esgrima La Plata
+
+Total: 15 descargadas, 1 fallidas
