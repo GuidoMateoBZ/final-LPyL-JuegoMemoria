@@ -26,21 +26,21 @@ body {
 
 .formularios-wrapper {
     display: flex;
-    gap: 40px;
+    gap: 20px; 
     justify-content: center;
-    flex-wrap: wrap;
-    /* En celulares colapsará uno debajo del otro */
+    align-items: center;
+    flex-wrap: nowrap; /* Forzamos a que JAMAS bajen de linea, estarán siempre las 3 juntas en fila */
     width: 100%;
-    max-width: 900px;
 }
 
 .registro-container {
     background: rgba(255, 255, 255, 0.95);
-    padding: 40px;
+    padding: 30px; 
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+    flex: 1 1 0; /* Todas comparten el ancho de forma super equitativa */
+    min-width: 0; /* Permite comprimirse más allá del límite de contenido si fuese necesario */
+    max-width: none;
     text-align: center;
 }
 
@@ -136,4 +136,24 @@ body {
 .enlace-volver-inverso:hover {
     color: #f8fafc;
     text-decoration: underline;
+}
+
+.mensaje-general {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 10px 20px;
+    color: #f8fafc;
+    font-size: 16px;
+    margin-bottom: 20px;
+    max-width: 900px;
+    text-align: center;
+}
+
+.jugador-msj {
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.4;
+    border-top: 1px solid #cbd5e1;
+    padding-top: 10px;
 }
