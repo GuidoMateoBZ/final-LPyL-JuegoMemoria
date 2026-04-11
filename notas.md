@@ -4,7 +4,9 @@
 + Definir si usar un framework o no.
 + Diseñar la estructura de los datos.
 + Generar el script SQL para crear la base de datos y crearla.
++ Crear las clases
 + Crear la estructura inicial del proyecto (login, registro, configuración, juego y resultados).
+
 ---
 
 # Script SQL para crear la base de datos

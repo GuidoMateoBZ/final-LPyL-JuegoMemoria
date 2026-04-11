@@ -21,6 +21,11 @@ class GestorPartida
         }
     }
 
+    public function getCon()
+    {
+        return $this->con;
+    }
+
     /**
      * Obtiene los detalles de una única partida usando su ID
      */
@@ -35,7 +40,7 @@ class GestorPartida
             $resultado->free();
             return ["exito" => true, "datos" => $partida];
         } catch (mysqli_sql_exception $e) {
-            return ["exito" => false, "mensaje" => "Error en BD: " . $e->getMessage()]; 
+            return ["exito" => false, "mensaje" => "Error en BD: " . $e->getMessage()];
         }
     }
 
@@ -67,7 +72,7 @@ class GestorPartida
             $resultado->free();
             return ["exito" => true, "datos" => $partidas];
         } catch (mysqli_sql_exception $e) {
-            return ["exito" => false, "mensaje" => "Error en BD: " . $e->getMessage()]; 
+            return ["exito" => false, "mensaje" => "Error en BD: " . $e->getMessage()];
         }
     }
 
@@ -107,10 +112,11 @@ class GestorPartida
      * Extrae de la BD la última partida que estos dos usuarios hayan jugado específicamente JUNTOS,
      * obteniendo qué puntaje sacó cada uno. 
      */
-    public function obtenerUltimaPartidaJuntos($id_usuario1, $id_usuario2) {
+    public function obtenerUltimaPartidaJuntos($id_usuario1, $id_usuario2)
+    {
         $id_usuario1 = $this->con->real_escape_string($id_usuario1);
         $id_usuario2 = $this->con->real_escape_string($id_usuario2);
-        
+
         $query = "
             SELECT p.*, up1.puntaje AS puntaje1, up2.puntaje AS puntaje2
             FROM partida p
@@ -133,9 +139,10 @@ class GestorPartida
      * Extrae la última partida que jugó un usuario determinado,
      * indicando la fecha y recuperando el nombre de su contrincante a través de un JOIN con la tabla de usuarios.
      */
-    public function obtenerUltimaPartidaUsuarioConOponente($id_usuario) {
+    public function obtenerUltimaPartidaUsuarioConOponente($id_usuario)
+    {
         $id_usuario = $this->con->real_escape_string($id_usuario);
-        
+
         $query = "
             SELECT p.*, u2.nombre_usuario AS oponente, up1.puntaje, up1.pares_descubiertos, up1.intentos
             FROM partida p
@@ -150,6 +157,27 @@ class GestorPartida
             $fila = $resultado->fetch_assoc();
             $resultado->free();
             return ["exito" => true, "datos" => $fila];
+        } catch (mysqli_sql_exception $e) {
+            return ["exito" => false, "mensaje" => $e->getMessage()];
+        }
+    }
+
+    public function guardarUsuarioPartida($datos)
+    {
+        $id_usuario = $this->con->real_escape_string($datos['id_usuario']);
+        $id_partida = $this->con->real_escape_string($datos['id_partida']);
+        $puntaje = $this->con->real_escape_string($datos['puntaje']);
+        $pares_descubiertos = $this->con->real_escape_string($datos['pares_descubiertos']);
+        $intentos = $this->con->real_escape_string($datos['intentos']);
+        $id_resultado = $this->con->real_escape_string($datos['id_resultado']);
+
+        $query = "
+            INSERT INTO usuario_partida (id_usuario, id_partida, puntaje, pares_descubiertos, intentos, id_resultado)
+            VALUES ('$id_usuario', '$id_partida', '$puntaje', '$pares_descubiertos', '$intentos', '$id_resultado')
+        ";
+        try {
+            $this->con->query($query);
+            return ["exito" => true];
         } catch (mysqli_sql_exception $e) {
             return ["exito" => false, "mensaje" => $e->getMessage()];
         }

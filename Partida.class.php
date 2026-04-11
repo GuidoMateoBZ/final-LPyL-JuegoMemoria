@@ -50,11 +50,17 @@ class Partida
     {
         $this->tiempo_jugado = $tiempo_jugado;
     }
-    public function guardarPartida()
+    public function guardarPartida($conexionExterna = null)
     {
-        $con = new mysqli("localhost", "root", "", "juego_memoria");
-        if ($con->connect_error) {
-            return ["exito" => false, "mensaje" => "Error de conexión a la base de datos."];
+        $con = $conexionExterna;
+        $cierreLocal = false;
+
+        if ($con === null) {
+            $con = new mysqli("localhost", "root", "", "juego_memoria");
+            if ($con->connect_error) {
+                return ["exito" => false, "mensaje" => "Error de conexión a la base de datos."];
+            }
+            $cierreLocal = true;
         }
 
         // Si no se pasó una fecha, la inicializamos con la fecha y hora actual de PHP
@@ -70,14 +76,18 @@ class Partida
             // Fundamental: Capturar y guardar el ID auto_generado de esta partida
             $this->id_partida = $con->insert_id;
 
-            $con->close();
+            if ($cierreLocal) {
+                $con->close();
+            }
             return [
                 "exito" => true,
                 "mensaje" => "Partida registrada correctamente.",
                 "id_partida" => $this->id_partida
             ];
         } catch (mysqli_sql_exception $e) {
-            $con->close();
+            if ($cierreLocal) {
+                $con->close();
+            }
             return [
                 "exito" => false,
                 "mensaje" => "Error en la base de datos: " . $e->getMessage()

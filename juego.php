@@ -87,8 +87,6 @@ if (!isset($_SESSION['usuario1']) || !isset($_SESSION['usuario2'])) {
 
         </div>
 
-        <a href="#" id="btnSalir" class="enlace-volver-inverso" style="margin-top: 30px;">Terminar partida y
-            abandonar</a>
     </div>
 
     <!-- Transferimos los nombres a JS de manera limpia -->

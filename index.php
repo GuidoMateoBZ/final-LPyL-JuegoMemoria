@@ -24,7 +24,7 @@
                     <label for="contrasenia1">Contraseña</label>
                     <input type="password" id="contrasenia1" name="contrasenia1" required>
                 </div>
-                <input type="submit" value="Iniciar Sesión" class="btn-submit">
+                <input type="submit" value="Iniciar Sesión" class="btn-submit" id="btnIniciarSesion1">
             </form>
         </div>
 
@@ -40,7 +40,7 @@
                     <label for="contrasenia2">Contraseña</label>
                     <input type="password" id="contrasenia2" name="contrasenia2" required>
                 </div>
-                <input type="submit" value="Iniciar Sesión" class="btn-submit">
+                <input type="submit" value="Iniciar Sesión" class="btn-submit" id="btnIniciarSesion2">
             </form>
         </div>
     </div>
@@ -65,6 +65,9 @@
 
                     if (respuesta.exito) {
                         sessionStorage.setItem('usuario' + numUsuario, nombre);
+                        var btn = document.getElementById('btnIniciarSesion' + numUsuario);
+                        btn.value = "Ya iniciaste sesión";
+                        btn.disabled = true;
                         if (sessionStorage.getItem('usuario1') && sessionStorage.getItem('usuario2')) {
                             window.location.href = "configuracion_partida.php";
                         }

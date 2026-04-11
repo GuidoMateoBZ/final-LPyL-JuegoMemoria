@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="registro-container">
+    <div class="registro-container" style="width: 33%;">
         <h1>Registro</h1>
         <form id="formRegistro">
             <div class="form-group">
